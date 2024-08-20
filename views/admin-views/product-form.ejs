@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include("../partials/head.ejs") %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    <%- include("../partials/header.ejs") %>
 
-<body>
-    <main>
         <form action="/admin/add-product" method="post" class="form product-form" enctype="multipart/form-data">
             <% if (error) {%>
                 <div class="error">
@@ -40,7 +33,4 @@
                     </div>
                     <button type="submit">Add Product</button>
         </form>
-    </main>
-</body>
-
-</html>
+        <%- include("../partials/footer.ejs") %>

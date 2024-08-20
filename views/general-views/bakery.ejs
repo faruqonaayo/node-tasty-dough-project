@@ -1,0 +1,35 @@
+<%- include("../partials/head.ejs") %>
+    <link rel="stylesheet" href="/styles/bakery.css">
+    <%- include("../partials/header.ejs") %>
+
+        <div class="search-product">
+            <form action="/search" method="post">
+                <input type="text" name="product" id="">
+                <button type="submit" class="btn">Search</button>
+            </form>
+        </div>
+        <div class="all-products">
+            <% allProducts.forEach(product=> {%>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/<%= product.imageurl %>" alt="<%= product.name %>">
+                    </div>
+                    <div class="product-info">
+                        <h1>
+                            <%= product.name %>
+                        </h1>
+                        <label>
+                            <%= product.price %>
+                        </label>
+                    </div>
+                    <div class="action-btns">
+                        <form>
+                            <input type="hidden" name="productid" class="productid">
+                            <button class="btn">Add To Cart</button>
+                        </form>
+                    </div>
+                </div>
+                <% }); %>
+        </div>
+
+        <%- include("../partials/footer.ejs") %>

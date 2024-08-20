@@ -1,0 +1,91 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  background-color: #dfd3c3;
+}
+
+header .header-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #596e79;
+  height: 70px;
+  margin-bottom: 15px;
+}
+
+header .header-logo label {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 2rem;
+}
+
+header .main-nav {
+  width: 80%;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header .main-nav .nav-options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  border: 2px solid #c7b198;
+  border-radius: 7px;
+}
+
+header .main-nav .nav-options .nav-item {
+  margin: 7px;
+  list-style: none;
+}
+
+header .main-nav .nav-options .nav-item a {
+  padding: 4px 4px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #596e79;
+  border-radius: 7px;
+  transition: all 0.4s linear;
+}
+
+header .main-nav .nav-options .nav-item a:hover {
+  background-color: #f0ece3;
+}
+
+header .main-nav .nav-options .nav-item a img {
+  width: 25px;
+  height: 25px;
+}
+
+.btn {
+  background-color: #ffffff;
+  border: 1px solid #596e79;
+  border-radius: 7px;
+  color: #596e79;
+  font-weight: 500;
+  padding: 5px 7px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn:hover {
+  background-color: #596e79;
+  color: #ffffff;
+}

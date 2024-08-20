@@ -43,7 +43,12 @@ export async function postAddProduct(req, res, next) {
 
     const isSaved = await newProduct.save();
     if (isSaved) {
+      console.log(isSaved);
+
       return res.status(201).send("created");
     }
-  } catch (error) {}
+  } catch (error) {
+    // handle error better
+    next(error);
+  }
 }

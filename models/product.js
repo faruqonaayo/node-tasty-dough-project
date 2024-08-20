@@ -10,11 +10,27 @@ class Product {
   }
 
   async save() {
-    const savedProduct = await db.query(
-      "INSERT INTO products (name, category,price,sales,imageurl) VALUES ($1,$2,$3,$4,$5) RETURNING *",
-      [this.name, this.category, this.price, this.sales, this.imageurl]
-    );
-    return savedProduct;
+    try {
+      const savedProduct = await db.query(
+        "INSERT INTO products (name, category,price,sales,imageurl) VALUES ($1,$2,$3,$4,$5) RETURNING *",
+        [this.name, this.category, this.price, this.sales, this.imageurl]
+      );
+      return savedProduct.rows[0];
+    } catch (error) {
+      // get back to handling errror
+      console.log(error);
+    }
+  }
+
+  static async getAllProducts() {
+    try {
+      const allProducts = await db.query("SELECT * FROM products");
+      return allProducts.rows;
+    } catch (error) {
+      // get back to handling errror
+
+      console.log(error);
+    }
   }
 }
 
