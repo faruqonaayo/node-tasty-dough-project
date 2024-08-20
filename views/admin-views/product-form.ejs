@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <main>
+        <form action="/admin/add-product" method="post" class="form product-form" enctype="multipart/form-data">
+            <% if (error) {%>
+                <div class="error">
+                    <label for="">
+                        <%= error %>
+                    </label>
+                </div>
+                <%} %>
+                    <div class="label-input">
+                        <label for="productName">Product Name:</label>
+                        <input type="text" name="productName">
+                    </div>
+                    <div class="label-input">
+                        <label for="productCategory">Product Category:</label>
+                        <select name="productCategory">
+                            <option value="buns">Buns</option>
+                            <option value="bread">Bread</option>
+                            <option value="pastries">Pastries</option>
+                            <option value="cake">Cake</option>
+                        </select>
+                    </div>
+                    <div class="label-input">
+                        <label for="productPrice">Product Price:</label>
+                        <input type="text" name="productPrice">
+                    </div>
+                    <div class="label-input">
+                        <label for="productImage">Product Image:</label>
+                        <input type="file" name="productImage" accept="image/jpg, image/jpeg, image/png">
+                    </div>
+                    <button type="submit">Add Product</button>
+        </form>
+    </main>
+</body>
+
+</html>
