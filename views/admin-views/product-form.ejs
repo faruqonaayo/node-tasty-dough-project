@@ -1,10 +1,10 @@
 <%- include("../partials/head.ejs") %>
-
+<link rel="stylesheet" href="/styles/product-form.css">
     <%- include("../partials/header.ejs") %>
 
         <form action="/admin/add-product" method="post" class="form product-form" enctype="multipart/form-data">
             <% if (error) {%>
-                <div class="error">
+                <div class="form-error">
                     <label for="">
                         <%= error %>
                     </label>
@@ -31,6 +31,6 @@
                         <label for="productImage">Product Image:</label>
                         <input type="file" name="productImage" accept="image/jpg, image/jpeg, image/png">
                     </div>
-                    <button type="submit">Add Product</button>
+                    <button type="submit" class="btn add-btn">Add Product</button>
         </form>
         <%- include("../partials/footer.ejs") %>

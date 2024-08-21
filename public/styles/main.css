@@ -89,3 +89,16 @@ header .main-nav .nav-options .nav-item a img {
   background-color: #596e79;
   color: #ffffff;
 }
+
+
+/* form error message */
+.form-error{
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  margin-bottom: 15px;
+  text-align: center;
+  background-color: rgb(251, 192, 202);
+  color: rgb(233, 37, 37);
+}

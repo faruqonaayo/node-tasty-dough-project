@@ -1,0 +1,30 @@
+form {
+  width: 60%;
+  margin: auto;
+  display: block;
+}
+
+form .label-input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 6px;
+}
+
+form .label-input label {
+  font-size: 1.1rem;
+  font-weight: 450;
+}
+
+form .label-input input,
+form .label-input select {
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  padding: 3px 5px;
+  background-color: #ffffff;
+}
+
+.add-btn {
+  width: 100%;
+  margin-top: 8px;
+}

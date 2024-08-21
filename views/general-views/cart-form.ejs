@@ -1,0 +1,27 @@
+<%- include("../partials/head.ejs") %>
+    <link rel="stylesheet" href="/styles/product-form.css">
+
+    <%- include("../partials/header.ejs") %>
+
+        <form action="/add-to-cart" method="post">
+            <% if (error) {%>
+                <div class="form-error">
+                    <label for="">
+                        <%= error %>
+                    </label>
+                </div>
+                <%} %>
+                    <div class="label-input">
+                        <input type="hidden" name="productId" value="<%= productId %>" readonly>
+                    </div>
+                    <div class="label-input">
+                        <label for="productName">Product Name:</label>
+                        <input type="text" name="productName" value="<%= productName %>" readonly>
+                    </div>
+                    <div class="label-input">
+                        <label for="productQty">Product Quantity (dozen):</label>
+                        <input type="number" name="productQty">
+                    </div>
+                    <button type="submit" class="btn add-btn">Add To Cart</button>
+        </form>
+        <%- include("../partials/footer.ejs") %>

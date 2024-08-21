@@ -13,9 +13,11 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "connect-pg-simple": "^9.0.1",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "express-validator": "^7.2.0",
     "multer": "^1.4.5-lts.1",
     "pg": "^8.12.0"

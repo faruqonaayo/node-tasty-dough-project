@@ -1,4 +1,4 @@
-import db from "../util/dbConnect.js";
+import { db } from "../util/dbConnect.js";
 
 class Product {
   constructor(name, category, price, sales, imageurl) {
@@ -26,6 +26,17 @@ class Product {
     try {
       const allProducts = await db.query("SELECT * FROM products");
       return allProducts.rows;
+    } catch (error) {
+      // get back to handling errror
+
+      console.log(error);
+    }
+  }
+
+  static async getOneProduct(id) {
+    try {
+      const product = await db.query("SELECT * FROM products WHERE id = $1", [id]);
+      return product.rows[0];
     } catch (error) {
       // get back to handling errror
 

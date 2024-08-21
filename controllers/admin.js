@@ -17,7 +17,9 @@ export async function postAddProduct(req, res, next) {
       if (req.file) {
         fs.unlink(req.file.path.replace("\\", "/"), (err) => {
           // handle error properly!!
-          console.log(err);
+          if (err) {
+            console.log(err);
+          }
         });
       }
       if (!req.file) {
