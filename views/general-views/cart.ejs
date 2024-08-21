@@ -1,0 +1,42 @@
+<%- include("../partials/head.ejs") %>
+    <link rel="stylesheet" href="/styles/cart.css">
+    <%- include("../partials/header.ejs") %>
+
+        <div class="all-cart-products">
+            <% cartProducts.forEach(cartProduct=> {%>
+                <div class="cart-product">
+                    <label>
+                        <%= cartProduct.name %>
+                    </label>
+                    <form action="/change-dozen-qty" method="post">
+                        <input type="hidden" name="cartProductId" value="<%= cartProduct.id %>" readonly>
+                        <label for="doz_quantity">Qty:</label>
+                        <input type="text" name="doz_quantity" value="<%= cartProduct.doz_quantity %>">
+                        <button class="btn" type="submit">Update</button>
+                    </form>
+                    <label>
+                        $<%= cartProduct.doz_price %> each
+                    </label>
+                    <form action="/remove-from-cart" method="post">
+                        <input type="hidden" name="cartProductId" value="<%= cartProduct.id %>" readonly>
+                        <button class="btn remove-btn" type="submit">Remove</button>
+                    </form>
+
+                </div>
+                <% }); %>
+                    <div class="payment-options">
+                        <div class="total">
+                            <h1>
+                                Total: $<%= total %>
+                            </h1>
+                        </div>
+                        <div>
+                            <form action="" method="post">
+                                <button type="submit">Pay Now</button>
+                                <button type="submit">Pay Later</button>
+                            </form>
+                        </div>
+                    </div>
+
+        </div>
+        <%- include("../partials/footer.ejs") %>

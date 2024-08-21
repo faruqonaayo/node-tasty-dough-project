@@ -45,31 +45,6 @@ class Product {
       console.log(error);
     }
   }
-
-  static async addToCart(id, sid) {
-    try {
-      const isProduct = await db.query("SELECT * FROM products WHERE id = $1", [
-        id,
-      ]);
-      const isSession = await db.query(
-        "SELECT * FROM sessions WHERE sid = $1",
-        [sid]
-      );
-
-      if (isProduct.rows.length === 1 && isSession.rows.length === 1) {
-        const cartProduct = await db.query(
-          "INSERT INTO cart_products (session_id, product_id, doz_quantity, paid) VALUES($1,$2,$3,$4) RETURNING *",
-          [sid, id, 1, false]
-        );
-        return cartProduct.rows[0];
-      }
-      return null;
-    } catch (error) {
-      // get back to handling errror
-
-      console.log(error);
-    }
-  }
 }
 
 export default Product;

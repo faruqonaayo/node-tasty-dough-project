@@ -25,7 +25,7 @@ CREATE TABLE cart_products (
 	session_id VARCHAR(150) NOT NULL,
 	product_id INT NOT NULL,
 	doz_quantity INT,
-	paid BOOL,
+	paid_online BOOL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (session_id) REFERENCES sessions(sid),
 	FOREIGN KEY (product_id) REFERENCES products(id)
