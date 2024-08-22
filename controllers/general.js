@@ -116,7 +116,31 @@ export async function getOrderForm(req, res, next) {
     if (cartProducts.length === 0) {
       return res.redirect("/bakery");
     }
-    return res.status(200).render("general-views/order-form");
+    return res.status(200).render("general-views/order-form", { error: null });
+  } catch (error) {
+    // handle error later
+    next(error);
+  }
+}
+
+export async function postOrderForm(req, res, next) {
+  try {
+    const { errors } = validationResult(req);
+    let errorList = errors.map((e) => e.msg);
+    console.log(errorList);
+
+    if (errorList.length > 0) {
+      return res
+        .status(422)
+        .render("general-views/order-form", { error: errorList[0] });
+    }
+    const fullName = req.body.fullName;
+    const pickupDate = req.body.pickupDate;
+    const pickupTime = req.body.pickupTime;
+    const mobileNumber = req.body.mobileNumber;
+
+    console.log(req.body);
+    // continue here
   } catch (error) {
     // handle error later
     next(error);

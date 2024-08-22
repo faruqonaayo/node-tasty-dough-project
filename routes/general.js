@@ -26,6 +26,26 @@ router.post(
   generalControllers.postRemoveCartProduct
 );
 
-router.get('/order-form', generalControllers.getOrderForm)
+router.get("/order-form", generalControllers.getOrderForm);
+
+router.post(
+  "/order-form",
+  [
+    body("fullName", "Name is a minimum of 2 characters").isLength({ min: 2 }),
+    body("pickupDate", "Enter a valid date").isDate(),
+    body("pickupTime", "Enter a valid time").isTime(),
+    body("mobileNumber")
+      .isNumeric()
+      .withMessage("Mobile number must be numbers only")
+      .custom((value, { req }) => {
+        if (value.length !== 10) {
+          return false;
+        }
+        return true;
+      })
+      .withMessage("Enter your 10 digit mobile number"),
+  ],
+  generalControllers.postOrderForm
+);
 
 export default router;

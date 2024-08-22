@@ -4,6 +4,7 @@ CREATE TABLE products(
 	price MONEY,
 	sales INT,
 	category VARCHAR(50) NOT NULL,
+	imageurl VARCHAR(150) NOT NULL,
 	PRIMARY KEY(id)
 );
 
@@ -23,7 +24,7 @@ CREATE TABLE orders(
 	id SERIAL NOT NULL,
 	customer_name VARCHAR(100) NOT NULL,
 	pickup_date DATE NOT NULL,
-	mobile CHAR(10) NOT NULL
+	mobile CHAR(10) NOT NULL,
 	PRIMARY KEY (id)
 );
 

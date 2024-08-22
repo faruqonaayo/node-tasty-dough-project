@@ -7,9 +7,9 @@
 
 .all-cart-products .cart-product {
   display: flex;
+  flex-direction: column;
   background-color: #ffffff;
-  width: 80%;
-  justify-content: space-between;
+  width: 70%;
   align-items: center;
   padding: 10px;
   border-radius: 7px;
@@ -22,26 +22,53 @@
   cursor: pointer;
 }
 
-.all-cart-products .cart-product form input{
-    width: 50px;
-    border: 1px solid #596e79;
-    font-size: 1.05rem;
-    font-weight: 500;
-    border-radius: 7px;
-    padding: 2px 5px;
-
+.all-cart-products .cart-product label,
+.all-cart-products .cart-product form {
+  margin-bottom: 7px;
 }
 
-.all-cart-products .cart-product form .remove-btn{
-    background-color: rgb(182, 84, 84);
-    color: white;
-    border: none;
-    transition: all 0.4s ease-in-out;
+.all-cart-products .cart-product form input {
+  width: 50px;
+  border: 1px solid #596e79;
+  font-size: 1.05rem;
+  font-weight: 500;
+  border-radius: 7px;
+  padding: 2px 5px;
 }
 
-.all-cart-products .cart-product form .remove-btn:hover{
-    background-color: rgb(251, 49, 49);
-    color: white;
-    border: none;
-    transition: all 0.4s ease-in-out;
+.all-cart-products .cart-product form .remove-btn {
+  background-color: rgb(182, 84, 84);
+  color: white;
+  border: none;
+  transition: all 0.4s ease-in-out;
 }
+
+.all-cart-products .cart-product form .remove-btn:hover {
+  background-color: rgb(251, 49, 49);
+  color: white;
+  border: none;
+  transition: all 0.4s ease-in-out;
+}
+
+.payment-options{
+  text-align: center;
+  margin-top: 15px;
+}
+
+.payment-options .total{
+  margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+  .all-cart-products .cart-product {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .all-cart-products .cart-product label,
+  .all-cart-products .cart-product form {
+    margin-bottom: 0px;
+  }
+}
+
+
