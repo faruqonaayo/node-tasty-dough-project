@@ -13,10 +13,18 @@ class Cart {
 
       if (isProduct.rows.length === 1 && isSession.rows.length === 1) {
         const cartProduct = await db.query(
-          "INSERT INTO cart_products (session_id, product_id, doz_quantity, paid_online) VALUES($1,$2,$3,$4) RETURNING *",
-          [sid, id, 1, false]
+          "INSERT INTO cart_products (session_id, product_id, doz_quantity) VALUES($1,$2,$3) RETURNING *",
+          [sid, id, 1]
         );
-        return cartProduct.rows[0];
+        const productPrice = await db.query(
+          "SELECT price FROM products WHERE id = $1",
+          [id]
+        );
+        const response = cartProduct.rows[0];
+        return {
+          ...response,
+          price: Number(productPrice.rows[0].price.replace("$", "")),
+        };
       }
       return null;
     } catch (error) {
@@ -34,8 +42,8 @@ class Cart {
             FROM cart_products
             INNER JOIN products
             ON cart_products.product_id = products.id
-            WHERE session_id = $1 AND paid_online = $2`,
-        [sid, false]
+            WHERE session_id = $1`,
+        [sid]
       );
       return userCartProducts.rows;
     } catch (error) {

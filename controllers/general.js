@@ -25,8 +25,14 @@ export async function postAddToCart(req, res, next) {
     const prodId = Number(req.body.id);
     const product = await Cart.addToCart(prodId, req.session.id);
     // console.log(product);
+
     if (!product) {
       return res.status(422).json({ message: "not successfully added" });
+    }
+    if (!req.session.total) {
+      req.session.total = product.price;
+    } else {
+      req.session.total += product.price;
     }
     return res.status(201).json({ message: "successfully added" });
   } catch (error) {
@@ -45,9 +51,10 @@ export async function getCart(req, res, next) {
         total = total + product.doz_price * product.doz_quantity;
       });
       req.session.total = total.toFixed(2);
-      return res
-        .status(200)
-        .render("general-views/cart", { cartProducts, total });
+      return res.status(200).render("general-views/cart", {
+        cartProducts,
+        total: req.session.total,
+      });
     }
   } catch (error) {
     // handle error later
@@ -97,5 +104,21 @@ export async function postRemoveCartProduct(req, res, next) {
       cartProductId
     );
     return res.redirect("/cart");
-  } catch (error) {}
+  } catch (error) {
+    // handle error later
+    next(error);
+  }
+}
+
+export async function getOrderForm(req, res, next) {
+  try {
+    const cartProducts = await Cart.getUserCartProducts(req.session.id);
+    if (cartProducts.length === 0) {
+      return res.redirect("/bakery");
+    }
+    return res.status(200).render("general-views/order-form");
+  } catch (error) {
+    // handle error later
+    next(error);
+  }
 }

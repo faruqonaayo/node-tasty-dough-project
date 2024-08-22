@@ -1,9 +1,8 @@
 <%- include("../partials/head.ejs") %>
     <link rel="stylesheet" href="/styles/product-form.css">
-
     <%- include("../partials/header.ejs") %>
 
-        <form action="/add-to-cart" method="post">
+        <form action="/order-form" method="post">
             <% if (error) {%>
                 <div class="form-error">
                     <label for="">
@@ -12,16 +11,17 @@
                 </div>
                 <%} %>
                     <div class="label-input">
-                        <input type="hidden" name="productId" value="<%= productId %>" readonly>
+                        <label for="fullName">Full Name:</label>
+                        <input type="text" name="fullName">
                     </div>
                     <div class="label-input">
-                        <label for="productName">Product Name:</label>
-                        <input type="text" name="productName" value="<%= productName %>" readonly>
+                        <label for="pickupDate">Pickup Date:</label>
+                        <input type="text" name="pickupDate">
                     </div>
                     <div class="label-input">
-                        <label for="productQty">Product Quantity (dozen):</label>
-                        <input type="number" name="productQty">
+                        <label for="mobileNumber">Mobile Number:</label>
+                        <input type="tel" name="mobileNumber">
                     </div>
-                    <button type="submit" class="btn add-btn">Add To Cart</button>
+                    <button type="submit" class="btn add-btn">Confirm Order</button>
         </form>
         <%- include("../partials/footer.ejs") %>

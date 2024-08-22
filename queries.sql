@@ -19,14 +19,30 @@ ALTER TABLE "sessions" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEF
 
 CREATE INDEX "IDX_session_expire" ON "session" ("expire");
 
+CREATE TABLE orders(
+	id SERIAL NOT NULL,
+	customer_name VARCHAR(100) NOT NULL,
+	pickup_date DATE NOT NULL,
+	mobile CHAR(10) NOT NULL
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE order_products(
+	id SERIAL NOT NULL,
+	product_id INT NOT NULL,
+	order_id INT NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (product_id) REFERENCES products(id),
+	FOREIGN KEY (order_id) REFERENCES orders(id)
+);
 
 CREATE TABLE cart_products (
 	id SERIAL NOT NULL,
 	session_id VARCHAR(150) NOT NULL,
 	product_id INT NOT NULL,
 	doz_quantity INT,
-	paid_online BOOL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (session_id) REFERENCES sessions(sid),
 	FOREIGN KEY (product_id) REFERENCES products(id)
 );
+

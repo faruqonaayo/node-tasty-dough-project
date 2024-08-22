@@ -26,4 +26,6 @@ router.post(
   generalControllers.postRemoveCartProduct
 );
 
+router.get('/order-form', generalControllers.getOrderForm)
+
 export default router;

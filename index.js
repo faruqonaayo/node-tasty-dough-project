@@ -11,6 +11,7 @@ import { db, sessionPool } from "./util/dbConnect.js";
 import adminRoutes from "./routes/admin.js";
 import errorRoutes from "./routes/error.js";
 import generalRoutes from "./routes/general.js";
+import autoDel from "./middleware/autoSessionsDelete.js";
 
 const app = express();
 
@@ -22,6 +23,10 @@ db.connect(() => {
 
 app.set("view engine", "ejs");
 app.set("views", "views");
+
+//
+
+//
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -46,6 +51,7 @@ const __dirname = path.join(dirname(__filename));
 app.use(express.static(path.resolve(__dirname, "public")));
 app.use("/uploads", express.static(path.resolve(__dirname, "uploads")));
 
+app.use(autoDel);
 app.use("/admin", adminRoutes);
 app.use(generalRoutes);
 app.use(errorRoutes);
