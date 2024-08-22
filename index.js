@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 const pgSession = connectPgSimple(session);
 app.use(
   session({
-    secret: "mysecret",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     store: new pgSession({
