@@ -36,18 +36,16 @@ export async function postAddProduct(req, res, next) {
     const productImage = req.file.path.replace("\\", "/");
 
     const newProduct = new Product(
-      productName,
-      productCategory,
+      productName.toLowerCase(),
+      productCategory.toLowerCase(),
       productPrice,
-      0,
       productImage
     );
 
     const isSaved = await newProduct.save();
     if (isSaved) {
-      console.log(isSaved);
-
-      return res.status(201).send("created");
+      // console.log(isSaved);
+      return res.status(201).redirect("/admin/add-product");
     }
   } catch (error) {
     // handle error better

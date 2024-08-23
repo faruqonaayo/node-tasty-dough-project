@@ -1,0 +1,13 @@
+<%- include("../partials/head.ejs") %>
+    <link rel="stylesheet" href="/styles/order-result.css">
+    <%- include("../partials/header.ejs") %>
+
+        <div class="order-result">
+            <% if (success) {%>
+                <h1>Order placed successfullly</h1>
+                <% } else {%>
+                    <h1>Order was not Placed</h1>
+                    <%} %>
+                    <a href="/bakery" class="btn">Go back to bakery</a>
+        </div>
+        <%- include("../partials/footer.ejs") %>

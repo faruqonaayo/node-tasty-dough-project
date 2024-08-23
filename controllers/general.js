@@ -15,6 +15,18 @@ export async function getBakery(req, res, next) {
   }
 }
 
+export async function postSearchResult(req, res, next) {
+  try {
+    const searchKeyword = req.body.keyword;
+    const allProducts = await Product.searchProduct(searchKeyword);
+    // console.log(allProducts);
+    res.status(200).render("general-views/search", { allProducts });
+  } catch (error) {
+    // handle error later
+    next(error);
+  }
+}
+
 export async function postAddToCart(req, res, next) {
   try {
     const { errors } = validationResult(req);
@@ -128,7 +140,6 @@ export async function postOrderForm(req, res, next) {
   try {
     const { errors } = validationResult(req);
     let errorList = errors.map((e) => e.msg);
-    console.log(errorList);
 
     if (errorList.length > 0) {
       return res
@@ -147,7 +158,9 @@ export async function postOrderForm(req, res, next) {
 
     // console.log(mappedCartProducts);
     if (mappedCartProducts.length === 0) {
-      return res.status(422).send("order not placed");
+      return res
+        .status(422)
+        .render("general-views/order-result", { success: false });
     }
 
     const newOrder = new Order(fullName, pickupDate, pickupTime, mobileNumber);
@@ -157,10 +170,14 @@ export async function postOrderForm(req, res, next) {
     );
     // console.log(newOrderProducts);
     if (!newOrderProducts) {
-      return res.status(422).send("order not placed");
+      return res
+        .status(422)
+        .render("general-views/order-result", { success: false });
     }
     req.session.total = 0;
-    return res.status(201).send("order placed");
+    return res
+      .status(201)
+      .render("general-views/order-result", { success: true });
   } catch (error) {
     // handle error later
     next(error);

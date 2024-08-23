@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.get("/bakery", generalControllers.getBakery);
 
+router.post("/search", generalControllers.postSearchResult);
+
 router.get("/cart", generalControllers.getCart);
 router.post(
   "/add-to-cart",

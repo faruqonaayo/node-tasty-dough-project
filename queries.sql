@@ -1,3 +1,9 @@
+DROP TABLE order_products;
+DROP TABLE orders;
+DROP TABLE cart_products;
+DROP TABLE products;
+DROP TABLE sessions;
+
 -- Creating  table to store sessions to database
 CREATE TABLE "sessions" (
   "sid" varchar NOT NULL COLLATE "default",
@@ -7,14 +13,13 @@ CREATE TABLE "sessions" (
 WITH (OIDS=FALSE);
 
 ALTER TABLE "sessions" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
-CREATE INDEX "IDX_session_expire" ON "session" ("expire");
+CREATE INDEX "IDX_session_expire" ON "sessions" ("expire");
 
 
 CREATE TABLE products(
 	id SERIAL NOT NULL,
 	name VARCHAR(50) NOT NULL,
 	price MONEY,
-	sales INT,
 	category VARCHAR(50) NOT NULL,
 	imageurl VARCHAR(150) NOT NULL,
 	PRIMARY KEY(id)
