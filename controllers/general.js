@@ -2,6 +2,7 @@ import { validationResult } from "express-validator";
 
 import Product from "../models/product.js";
 import Cart from "../models/cart.js";
+import Order from "../models/order.js";
 
 export async function getBakery(req, res, next) {
   try {
@@ -139,8 +140,27 @@ export async function postOrderForm(req, res, next) {
     const pickupTime = req.body.pickupTime;
     const mobileNumber = req.body.mobileNumber;
 
-    console.log(req.body);
-    // continue here
+    const cartProducts = await Cart.getUserCartProducts(req.session.id);
+    const mappedCartProducts = cartProducts.map((p) => {
+      return { id: p.product_id, doz_quantity: p.doz_quantity };
+    });
+
+    // console.log(mappedCartProducts);
+    if (mappedCartProducts.length === 0) {
+      return res.status(422).send("order not placed");
+    }
+
+    const newOrder = new Order(fullName, pickupDate, pickupTime, mobileNumber);
+    const newOrderProducts = await newOrder.createOrder(
+      mappedCartProducts,
+      req.session.id
+    );
+    // console.log(newOrderProducts);
+    if (!newOrderProducts) {
+      return res.status(422).send("order not placed");
+    }
+    req.session.total = 0;
+    return res.status(201).send("order placed");
   } catch (error) {
     // handle error later
     next(error);
