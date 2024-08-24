@@ -1,9 +1,11 @@
 import fs from "fs";
+import bcrypt from "bcrypt";
 import path from "path";
 
 import { validationResult } from "express-validator";
 
 import Product from "../models/product.js";
+import Admin from "../models/admin.js";
 
 export function getAddProduct(req, res, next) {
   if (!req.isAuthenticated()) {
@@ -61,6 +63,94 @@ export async function postAddProduct(req, res, next) {
       // console.log(isSaved);
       return res.status(201).redirect("/admin/add-product");
     }
+  } catch (error) {
+    // handle error better
+    next(error);
+  }
+}
+
+export async function getChangePassword(req, res, next) {
+  try {
+    if (!req.isAuthenticated()) {
+      return res.redirect("/auth/login");
+    }
+    const admin = await Admin.checkForAdmin();
+    // console.log(admin);
+    return res.status(200).render("admin-views/change-password", {
+      error: null,
+      auth: req.isAuthenticated(),
+      username: admin.username,
+    });
+  } catch (error) {
+    // handle error better
+    next(error);
+  }
+}
+
+export async function postChangePassword(req, res, next) {
+  try {
+    if (!req.isAuthenticated()) {
+      return res.redirect("/auth/login");
+    }
+    const adminUsername = req.body.email;
+    const newPassword = req.body.password;
+    const confirmAdmin = await Admin.checkByEmail(adminUsername);
+    const admin = await Admin.checkForAdmin();
+
+    const { errors } = validationResult(req);
+    let errorList = errors.map((e) => e.msg);
+    if (errorList.length > 0 || !confirmAdmin) {
+      if (!confirmAdmin) {
+        errorList.push("no admin with such username");
+      }
+      return res.status(422).render("admin-views/change-password", {
+        error: errorList[0],
+        auth: req.isAuthenticated(),
+        username: admin.username,
+      });
+    }
+
+    bcrypt.hash(newPassword, 12, async (err, hash) => {
+      if (err) {
+        throw err;
+      }
+      const response = await Admin.changePassword(adminUsername, hash);
+      // console.log(response);
+      return res.redirect("/admin/add-product");
+    });
+  } catch (error) {
+    // handle error better
+    next(error);
+  }
+}
+
+export async function postDeleteProduct(req, res, next) {
+  try {
+    if (req.isAuthenticated()) {
+      const productId = req.body.productId;
+      const isProduct = await Product.getOneProduct(productId);
+      if (isProduct) {
+        const response = await Product.deleteProduct(isProduct.id);
+      }
+    }
+    return res.redirect("/bakery");
+  } catch (error) {
+    // handle error better
+    next(error);
+  }
+}
+
+export async function getOrders(req, res, next) {
+  try {
+    if (!req.isAuthenticated()) {
+      return res.redirect("/auth/login");
+    }
+    const admin = await Admin.checkForAdmin();
+    // console.log(admin);
+    return res.status(200).render("admin-views/orders", {
+      error: null,
+      auth: req.isAuthenticated(),
+    });
   } catch (error) {
     // handle error better
     next(error);

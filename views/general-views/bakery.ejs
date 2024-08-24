@@ -28,6 +28,13 @@
                             <input type="hidden" name="productId" value="<%= product.id %>" readonly>
                             <button class="btn">Add To Cart</button>
                         </form>
+                        <% if (auth) {%>
+                            <form class="delete-product" action="/admin/delete" method="post">
+                                <input type="hidden" name="productId" value="<%= product.id %>" readonly>
+                                <button class="btn delete-btn">Delete</button>
+                            </form>
+                            <% } %>
+
                     </div>
                 </div>
                 <% }); %>

@@ -33,7 +33,7 @@ router.get("/order-form", generalControllers.getOrderForm);
 router.post(
   "/order-form",
   [
-    body("fullName", "Name is a minimum of 2 characters").isLength({ min: 2 }),
+    body("fullName", "Name is a minimum of 2 characters").trim().isLength({ min: 2 }),
     body("pickupDate", "Enter a valid date").isDate(),
     body("pickupTime", "Enter a valid time").isTime(),
     body("mobileNumber")

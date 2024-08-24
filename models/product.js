@@ -57,6 +57,24 @@ class Product {
       console.log(error);
     }
   }
+
+  static async deleteProduct(id) {
+    try {
+      const foundProduct = await this.getOneProduct(id);
+      if (!foundProduct) {
+        return null;
+      }
+
+      await db.query("DELETE FROM order_products WHERE product_id = $1", [id]);
+      await db.query("DELETE FROM cart_products WHERE product_id = $1", [id]);
+      await db.query("DELETE FROM products WHERE id = $1", [id]);
+      return true;
+    } catch (error) {
+      // get back to handling errror
+
+      console.log(error);
+    }
+  }
 }
 
 export default Product;

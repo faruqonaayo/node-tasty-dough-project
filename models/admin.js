@@ -25,7 +25,37 @@ class Admin {
       if (response.rows.length !== 1) {
         return null;
       }
-      return true;
+      return response.rows[0];
+    } catch (error) {
+      // check this later
+      console.log(error);
+    }
+  }
+
+  static async checkByEmail(username) {
+    try {
+      const response = await db.query("SELECT * FROM admin WHERE username=$1", [
+        username,
+      ]);
+      if (response.rows.length !== 1) {
+        return null;
+      }
+      return response.rows[0];
+    } catch (error) {
+      // check this later
+      console.log(error);
+    }
+  }
+  static async changePassword(username, newPassword) {
+    try {
+      const response = await db.query(
+        "UPDATE admin SET password= $1 WHERE username=$2 RETURNING *",
+        [newPassword, username]
+      );
+      if (response.rows.length !== 1) {
+        return null;
+      }
+      return response.rows[0];
     } catch (error) {
       // check this later
       console.log(error);

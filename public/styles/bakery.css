@@ -61,3 +61,26 @@
   font-size: 0.9rem;
   margin-bottom: 3px;
 }
+
+
+.action-btns{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.action-btns form{
+  margin: 2px;
+}
+
+.action-btns form .delete-btn{
+  background-color: rgb(255, 117, 117);
+  border: #ffffff;
+  color: #ffffff;
+  font-weight: 500;
+  transition: all .5s ease-in-out;
+}
+
+.action-btns form .delete-btn:hover{
+  background-color: rgb(246, 48, 48);
+}

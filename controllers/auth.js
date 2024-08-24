@@ -11,7 +11,7 @@ export async function getSignUp(req, res, next) {
     if (adminPresent) {
       return res.redirect("/auth/login");
     }
-    return res.status(200).render("admin-views/signup", {
+    return res.status(200).render("auth-views/signup", {
       error: null,
       auth: req.isAuthenticated(),
     });
@@ -26,7 +26,7 @@ export async function postSignUp(req, res, next) {
     const { errors } = validationResult(req);
     let errorList = errors.map((e) => e.msg);
     if (errorList.length > 0) {
-      return res.status(422).render("admin-views/signup", {
+      return res.status(422).render("auth-views/signup", {
         error: errorList[0],
         auth: req.isAuthenticated(),
       });
@@ -61,7 +61,7 @@ export function getLogIn(req, res, next) {
         }
       });
     }
-    return res.status(200).render("admin-views/login", {
+    return res.status(200).render("auth-views/login", {
       error: null,
       auth: req.isAuthenticated(),
     });
