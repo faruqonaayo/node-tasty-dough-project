@@ -6,6 +6,8 @@ import Admin from "../models/admin.js";
 export async function getSignUp(req, res, next) {
   try {
     const adminPresent = await Admin.checkForAdmin();
+    // console.log(adminPresent);
+
     if (adminPresent) {
       return res.redirect("/auth/login");
     }
@@ -40,7 +42,7 @@ export async function postSignUp(req, res, next) {
         }
         const newAdmin = new Admin(adminEmail, hash);
         const response = await newAdmin.createAdmin();
-        console.log(response);
+        // console.log(response);
       });
     }
     return res.redirect("/auth/login");
@@ -52,11 +54,13 @@ export async function postSignUp(req, res, next) {
 
 export function getLogIn(req, res, next) {
   try {
-    req.logout((err) => {
-      if (err) {
-        throw err;
-      }
-    });
+    if (req.isAuthenticated()) {
+      req.logout((err) => {
+        if (err) {
+          throw err;
+        }
+      });
+    }
     return res.status(200).render("admin-views/login", {
       error: null,
       auth: req.isAuthenticated(),
@@ -68,11 +72,13 @@ export function getLogIn(req, res, next) {
 
 export function getLogOut(req, res, next) {
   try {
-    req.logout((err) => {
-      if (err) {
-        throw err;
-      }
-    });
+    if (req.isAuthenticated()) {
+      req.logout((err) => {
+        if (err) {
+          throw err;
+        }
+      });
+    }
     return res.redirect("/auth/login");
   } catch (error) {
     next(error);

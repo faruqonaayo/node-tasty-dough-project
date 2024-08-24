@@ -22,7 +22,9 @@ export async function getBakery(req, res, next) {
 export async function postSearchResult(req, res, next) {
   try {
     const searchKeyword = req.body.keyword;
-    const allProducts = await Product.searchProduct(searchKeyword.toLowerCase());
+    const allProducts = await Product.searchProduct(
+      searchKeyword.toLowerCase()
+    );
     // console.log(allProducts);
     res.status(200).render("general-views/search", {
       allProducts,
