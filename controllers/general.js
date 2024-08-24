@@ -8,7 +8,11 @@ export async function getBakery(req, res, next) {
   try {
     const allProducts = await Product.getAllProducts();
     // console.log(allProducts);
-    res.status(200).render("general-views/bakery", { allProducts });
+    res.status(200).render("general-views/bakery", {
+      allProducts,
+      preValue: null,
+      auth: req.isAuthenticated(),
+    });
   } catch (error) {
     // handle error later
     next(error);
@@ -20,7 +24,11 @@ export async function postSearchResult(req, res, next) {
     const searchKeyword = req.body.keyword;
     const allProducts = await Product.searchProduct(searchKeyword);
     // console.log(allProducts);
-    res.status(200).render("general-views/search", { allProducts });
+    res.status(200).render("general-views/search", {
+      allProducts,
+      preValue: searchKeyword,
+      auth: req.isAuthenticated(),
+    });
   } catch (error) {
     // handle error later
     next(error);
@@ -67,6 +75,7 @@ export async function getCart(req, res, next) {
       return res.status(200).render("general-views/cart", {
         cartProducts,
         total: req.session.total,
+        auth: req.isAuthenticated(),
       });
     }
   } catch (error) {
@@ -129,7 +138,11 @@ export async function getOrderForm(req, res, next) {
     if (cartProducts.length === 0) {
       return res.redirect("/bakery");
     }
-    return res.status(200).render("general-views/order-form", { error: null });
+    return res.status(200).render("general-views/order-form", {
+      error: null,
+      preValue: null,
+      auth: req.isAuthenticated(),
+    });
   } catch (error) {
     // handle error later
     next(error);
@@ -138,18 +151,20 @@ export async function getOrderForm(req, res, next) {
 
 export async function postOrderForm(req, res, next) {
   try {
-    const { errors } = validationResult(req);
-    let errorList = errors.map((e) => e.msg);
-
-    if (errorList.length > 0) {
-      return res
-        .status(422)
-        .render("general-views/order-form", { error: errorList[0] });
-    }
     const fullName = req.body.fullName;
     const pickupDate = req.body.pickupDate;
     const pickupTime = req.body.pickupTime;
     const mobileNumber = req.body.mobileNumber;
+    const { errors } = validationResult(req);
+    let errorList = errors.map((e) => e.msg);
+
+    if (errorList.length > 0) {
+      return res.status(422).render("general-views/order-form", {
+        error: errorList[0],
+        preValue: { fullName, pickupDate, mobileNumber, pickupTime },
+        auth: req.isAuthenticated(),
+      });
+    }
 
     const cartProducts = await Cart.getUserCartProducts(req.session.id);
     const mappedCartProducts = cartProducts.map((p) => {
@@ -158,9 +173,10 @@ export async function postOrderForm(req, res, next) {
 
     // console.log(mappedCartProducts);
     if (mappedCartProducts.length === 0) {
-      return res
-        .status(422)
-        .render("general-views/order-result", { success: false });
+      return res.status(422).render("general-views/order-result", {
+        success: false,
+        auth: req.isAuthenticated(),
+      });
     }
 
     const newOrder = new Order(fullName, pickupDate, pickupTime, mobileNumber);
@@ -170,14 +186,16 @@ export async function postOrderForm(req, res, next) {
     );
     // console.log(newOrderProducts);
     if (!newOrderProducts) {
-      return res
-        .status(422)
-        .render("general-views/order-result", { success: false });
+      return res.status(422).render("general-views/order-result", {
+        success: false,
+        auth: req.isAuthenticated(),
+      });
     }
     req.session.total = 0;
-    return res
-      .status(201)
-      .render("general-views/order-result", { success: true });
+    return res.status(201).render("general-views/order-result", {
+      success: true,
+      auth: req.isAuthenticated(),
+    });
   } catch (error) {
     // handle error later
     next(error);

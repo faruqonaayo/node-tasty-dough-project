@@ -6,11 +6,28 @@ import { validationResult } from "express-validator";
 import Product from "../models/product.js";
 
 export function getAddProduct(req, res, next) {
-  res.status(200).render("admin-views/product-form.ejs", { error: null });
+  if (!req.isAuthenticated()) {
+    return res.redirect("/auth/login");
+  }
+
+  return res.status(200).render("admin-views/product-form.ejs", {
+    error: null,
+    preValue: null,
+    auth: req.isAuthenticated(),
+  });
 }
 
 export async function postAddProduct(req, res, next) {
   try {
+    if (!req.isAuthenticated()) {
+      return res.redirect("/auth/login");
+    }
+
+    const productName = req.body.productName;
+    const productCategory = req.body.productCategory;
+    const productPrice = Number(req.body.productPrice);
+    const productImage = req.file.path.replace("\\", "/");
+
     const { errors } = validationResult(req);
     let errorList = errors.map((e) => e.msg);
     if (errorList.length > 0 || !req.file) {
@@ -25,15 +42,12 @@ export async function postAddProduct(req, res, next) {
       if (!req.file) {
         errorList.push("Enter a valid file");
       }
-      return res
-        .status(422)
-        .render("admin-views/product-form.ejs", { error: errorList[0] });
+      return res.status(422).render("admin-views/product-form.ejs", {
+        error: errorList[0],
+        preValue: { productName, productPrice },
+        auth: req.isAuthenticated(),
+      });
     }
-
-    const productName = req.body.productName;
-    const productCategory = req.body.productCategory;
-    const productPrice = Number(req.body.productPrice);
-    const productImage = req.file.path.replace("\\", "/");
 
     const newProduct = new Product(
       productName.toLowerCase(),

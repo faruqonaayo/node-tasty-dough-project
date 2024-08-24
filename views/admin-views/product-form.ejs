@@ -1,5 +1,5 @@
 <%- include("../partials/head.ejs") %>
-<link rel="stylesheet" href="/styles/product-form.css">
+    <link rel="stylesheet" href="/styles/product-form.css">
     <%- include("../partials/header.ejs") %>
 
         <form action="/admin/add-product" method="post" class="form product-form" enctype="multipart/form-data">
@@ -12,7 +12,7 @@
                 <%} %>
                     <div class="label-input">
                         <label for="productName">Product Name:</label>
-                        <input type="text" name="productName">
+                        <input type="text" name="productName" value="<%= preValue? preValue.productName:"" %>">
                     </div>
                     <div class="label-input">
                         <label for="productCategory">Product Category:</label>
@@ -25,7 +25,7 @@
                     </div>
                     <div class="label-input">
                         <label for="productPrice">Product Price:</label>
-                        <input type="text" name="productPrice">
+                        <input type="text" name="productPrice" value="<%= preValue? preValue.productPrice:"" %>">
                     </div>
                     <div class="label-input">
                         <label for="productImage">Product Image:</label>

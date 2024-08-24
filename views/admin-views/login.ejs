@@ -1,0 +1,23 @@
+<%- include("../partials/head.ejs") %>
+    <link rel="stylesheet" href="/styles/product-form.css">
+    <%- include("../partials/header.ejs") %>
+
+        <form action="/auth/login" method="post">
+            <% if (error) {%>
+                <div class="form-error">
+                    <label for="">
+                        <%= error %>
+                    </label>
+                </div>
+                <%} %>
+                    <div class="label-input">
+                        <label for="username">Username:</label>
+                        <input type="email" name="username">
+                    </div>
+                    <div class="label-input">
+                        <label for="password">Password:</label>
+                        <input type="password" name="password">
+                    </div>
+                    <button type="submit" class="btn add-btn">Log In</button>
+        </form>
+        <%- include("../partials/footer.ejs") %>

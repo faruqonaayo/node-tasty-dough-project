@@ -5,7 +5,7 @@
 
         <div class="search-product">
             <form action="/search" method="post">
-                <input type="text" name="keyword">
+                <input type="text" name="keyword" value="<%= preValue? preValue:"" %>">
                 <button type="submit" class="btn">Search</button>
             </form>
         </div>

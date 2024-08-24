@@ -13,9 +13,10 @@ body {
 header .header-logo {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   background-color: #596e79;
   height: 70px;
+  padding: 5px 30px;
   margin-bottom: 15px;
 }
 
@@ -25,6 +26,17 @@ header .header-logo label {
   font-weight: 700;
   color: #ffffff;
   font-size: 2rem;
+}
+
+header .header-logo .auth a {
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 1.05rem;
+  text-decoration: none;
+  padding: 3px 5px;
+  margin: 5px;
+  border: 1px solid #c7b198;
+  border-radius: 7px;
 }
 
 header .main-nav {
@@ -90,9 +102,8 @@ header .main-nav .nav-options .nav-item a img {
   color: #ffffff;
 }
 
-
 /* form error message */
-.form-error{
+.form-error {
   width: 100%;
   font-size: 1.2rem;
   font-weight: 500;

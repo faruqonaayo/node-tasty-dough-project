@@ -12,19 +12,19 @@
                 <%} %>
                     <div class="label-input">
                         <label for="fullName">Full Name:</label>
-                        <input type="text" name="fullName">
+                        <input type="text" name="fullName" value="<%= preValue? preValue.fullName:"" %>">
                     </div>
                     <div class="label-input">
                         <label for="pickupDate">Pickup Date:</label>
-                        <input type="date" name="pickupDate">
+                        <input type="date" name="pickupDate" value="<%= preValue? preValue.pickupDate:"" %>">
                     </div>
                     <div class="label-input">
-                        <label for="pickupTime">Pickup Date:</label>
-                        <input type="time" name="pickupTime">
+                        <label for="pickupTime">Pickup Time:</label>
+                        <input type="time" name="pickupTime" value="<%= preValue? preValue.pickupTime:"" %>">
                     </div>
                     <div class="label-input">
                         <label for="mobileNumber">Mobile Number:</label>
-                        <input type="tel" name="mobileNumber">
+                        <input type="tel" name="mobileNumber" value="<%= preValue? preValue.mobileNumber:"" %>">
                     </div>
                     <button type="submit" class="btn add-btn">Confirm Order</button>
         </form>

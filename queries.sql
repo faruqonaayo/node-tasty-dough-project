@@ -2,6 +2,7 @@ DROP TABLE order_products;
 DROP TABLE orders;
 DROP TABLE cart_products;
 DROP TABLE products;
+DROP TABLE admin;
 DROP TABLE sessions;
 
 -- Creating  table to store sessions to database
@@ -54,3 +55,9 @@ CREATE TABLE cart_products (
 	FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
+CREATE TABLE admin (
+	id SERIAL NOT NULL,
+	username VARCHAR(150) NOT NULL,
+	password VARCHAR(150) NOT NULL,
+	PRIMARY KEY (id)
+);
