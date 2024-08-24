@@ -130,7 +130,13 @@ export async function postDeleteProduct(req, res, next) {
       const productId = req.body.productId;
       const isProduct = await Product.getOneProduct(productId);
       if (isProduct) {
-        const response = await Product.deleteProduct(isProduct.id);
+        fs.unlink(isProduct.imageurl, async (err) => {
+          if (err) {
+            console.log(err);
+            throw err;
+          }
+          const response = await Product.deleteProduct(isProduct.id);
+        });
       }
     }
     return res.redirect("/bakery");
