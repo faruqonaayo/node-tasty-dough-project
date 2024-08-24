@@ -14,7 +14,8 @@ export async function getBakery(req, res, next) {
       auth: req.isAuthenticated(),
     });
   } catch (error) {
-    // handle error later
+    error.statusCode = error.statusCode || 500;
+    error.message = error.message || "Application crashed fix the bug to fix";
     next(error);
   }
 }
@@ -32,7 +33,8 @@ export async function postSearchResult(req, res, next) {
       auth: req.isAuthenticated(),
     });
   } catch (error) {
-    // handle error later
+    error.statusCode = error.statusCode || 500;
+    error.message = error.message || "Application crashed fix the bug to fix";
     next(error);
   }
 }
@@ -59,7 +61,8 @@ export async function postAddToCart(req, res, next) {
     }
     return res.status(201).json({ message: "successfully added" });
   } catch (error) {
-    // handle error later
+    error.statusCode = error.statusCode || 500;
+    error.message = error.message || "Application crashed fix the bug to fix";
     next(error);
   }
 }
@@ -81,7 +84,8 @@ export async function getCart(req, res, next) {
       });
     }
   } catch (error) {
-    // handle error later
+    error.statusCode = error.statusCode || 500;
+    error.message = error.message || "Application crashed fix the bug to fix";
     next(error);
   }
 }
@@ -107,9 +111,9 @@ export async function postChangeDozQuantity(req, res, next) {
       );
     }
     return res.redirect("/cart");
-    // next();
   } catch (error) {
-    // handle error later
+    error.statusCode = error.statusCode || 500;
+    error.message = error.message || "Application crashed fix the bug to fix";
     next(error);
   }
 }
@@ -129,7 +133,8 @@ export async function postRemoveCartProduct(req, res, next) {
     );
     return res.redirect("/cart");
   } catch (error) {
-    // handle error later
+    error.statusCode = error.statusCode || 500;
+    error.message = error.message || "Application crashed fix the bug to fix";
     next(error);
   }
 }
@@ -146,7 +151,8 @@ export async function getOrderForm(req, res, next) {
       auth: req.isAuthenticated(),
     });
   } catch (error) {
-    // handle error later
+    error.statusCode = error.statusCode || 500;
+    error.message = error.message || "Application crashed fix the bug to fix";
     next(error);
   }
 }
@@ -199,7 +205,8 @@ export async function postOrderForm(req, res, next) {
       auth: req.isAuthenticated(),
     });
   } catch (error) {
-    // handle error later
+    error.statusCode = error.statusCode || 500;
+    error.message = error.message || "Application crashed fix the bug to fix";
     next(error);
   }
 }

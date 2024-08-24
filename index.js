@@ -58,6 +58,14 @@ app.use("/admin", adminRoutes);
 app.use(generalRoutes);
 app.use(errorRoutes);
 
+// 500 internal server error
+app.use((error, req, res, next) => {
+  // console.log(error.statusCode);
+  // console.log(error.message);
+  res
+    .status(error.statusCode)
+    .render("error-views/500", { auth: req.isAuthenticated() });
+});
 
 app.listen(PORT, async () => {
   console.log(`Server is listening on port ${PORT}`);

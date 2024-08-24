@@ -16,8 +16,9 @@ export async function getSignUp(req, res, next) {
       auth: req.isAuthenticated(),
     });
   } catch (error) {
-    //   work on this later
-    console.log(error);
+    error.statusCode = error.statusCode || 500;
+    error.message = error.message || "Application crashed fix the bug to fix";
+    next(error);
   }
 }
 
@@ -37,18 +38,26 @@ export async function postSignUp(req, res, next) {
     const adminPresent = await Admin.checkForAdmin();
     if (!adminPresent) {
       bcrtpt.hash(adminPassword, 12, async (err, hash) => {
-        if (err) {
-          console.log(err);
+        try {
+          if (err) {
+            console.log(err);
+          }
+          const newAdmin = new Admin(adminEmail, hash);
+          const response = await newAdmin.createAdmin();
+          // console.log(response);
+        } catch (error) {
+          error.statusCode = error.statusCode || 500;
+          error.message =
+            error.message || "Application crashed fix the bug to fix";
+          next(error);
         }
-        const newAdmin = new Admin(adminEmail, hash);
-        const response = await newAdmin.createAdmin();
-        // console.log(response);
       });
     }
     return res.redirect("/auth/login");
   } catch (error) {
-    //   work on this later
-    console.log(error);
+    error.statusCode = error.statusCode || 500;
+    error.message = error.message || "Application crashed fix the bug to fix";
+    next(error);
   }
 }
 
@@ -56,8 +65,15 @@ export function getLogIn(req, res, next) {
   try {
     if (req.isAuthenticated()) {
       req.logout((err) => {
-        if (err) {
-          throw err;
+        try {
+          if (err) {
+            throw err;
+          }
+        } catch (error) {
+          error.statusCode = error.statusCode || 500;
+          error.message =
+            error.message || "Application crashed fix the bug to fix";
+          next(error);
         }
       });
     }
@@ -66,6 +82,8 @@ export function getLogIn(req, res, next) {
       auth: req.isAuthenticated(),
     });
   } catch (error) {
+    error.statusCode = error.statusCode || 500;
+    error.message = error.message || "Application crashed fix the bug to fix";
     next(error);
   }
 }
@@ -74,13 +92,22 @@ export function getLogOut(req, res, next) {
   try {
     if (req.isAuthenticated()) {
       req.logout((err) => {
-        if (err) {
-          throw err;
+        try {
+          if (err) {
+            throw err;
+          }
+        } catch (error) {
+          error.statusCode = error.statusCode || 500;
+          error.message =
+            error.message || "Application crashed fix the bug to fix";
+          next(error);
         }
       });
     }
     return res.redirect("/auth/login");
   } catch (error) {
+    error.statusCode = error.statusCode || 500;
+    error.message = error.message || "Application crashed fix the bug to fix";
     next(error);
   }
 }

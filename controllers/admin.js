@@ -35,9 +35,15 @@ export async function postAddProduct(req, res, next) {
     if (errorList.length > 0 || !req.file) {
       if (req.file) {
         fs.unlink(req.file.path.replace("\\", "/"), (err) => {
-          // handle error properly!!
-          if (err) {
-            console.log(err);
+          try {
+            if (err) {
+              throw err;
+            }
+          } catch (error) {
+            error.statusCode = error.statusCode || 500;
+            error.message =
+              error.message || "Application crashed fix the bug to fix";
+            next(error);
           }
         });
       }
@@ -64,7 +70,8 @@ export async function postAddProduct(req, res, next) {
       return res.status(201).redirect("/admin/add-product");
     }
   } catch (error) {
-    // handle error better
+    error.statusCode = error.statusCode || 500;
+    error.message = error.message || "Application crashed fix the bug to fix";
     next(error);
   }
 }
@@ -82,7 +89,8 @@ export async function getChangePassword(req, res, next) {
       username: admin.username,
     });
   } catch (error) {
-    // handle error better
+    error.statusCode = error.statusCode || 500;
+    error.message = error.message || "Application crashed fix the bug to fix";
     next(error);
   }
 }
@@ -111,15 +119,23 @@ export async function postChangePassword(req, res, next) {
     }
 
     bcrypt.hash(newPassword, 12, async (err, hash) => {
-      if (err) {
-        throw err;
+      try {
+        if (err) {
+          throw err;
+        }
+        const response = await Admin.changePassword(adminUsername, hash);
+        // console.log(response);
+        return res.redirect("/admin/add-product");
+      } catch (error) {
+        error.statusCode = error.statusCode || 500;
+        error.message =
+          error.message || "Application crashed fix the bug to fix";
+        next(error);
       }
-      const response = await Admin.changePassword(adminUsername, hash);
-      // console.log(response);
-      return res.redirect("/admin/add-product");
     });
   } catch (error) {
-    // handle error better
+    error.statusCode = error.statusCode || 500;
+    error.message = error.message || "Application crashed fix the bug to fix";
     next(error);
   }
 }
@@ -129,19 +145,21 @@ export async function postDeleteProduct(req, res, next) {
     if (req.isAuthenticated()) {
       const productId = req.body.productId;
       const isProduct = await Product.getOneProduct(productId);
-      if (isProduct) {
-        fs.unlink(isProduct.imageurl, async (err) => {
-          if (err) {
-            console.log(err);
-            throw err;
-          }
-          const response = await Product.deleteProduct(isProduct.id);
-        });
+      if (!isProduct) {
+        return res.redirect("/bakery");
       }
+      fs.unlink(isProduct.imageurl, async (err) => {
+        try {
+          const response = await Product.deleteProduct(isProduct.id);
+          return res.redirect("/bakery");
+        } catch (error) {
+          next(error);
+        }
+      });
     }
-    return res.redirect("/bakery");
   } catch (error) {
-    // handle error better
+    error.statusCode = error.statusCode || 500;
+    error.message = error.message || "Application crashed fix the bug to fix";
     next(error);
   }
 }
@@ -158,7 +176,8 @@ export async function getOrders(req, res, next) {
       auth: req.isAuthenticated(),
     });
   } catch (error) {
-    // handle error better
+    error.statusCode = error.statusCode || 500;
+    error.message = error.message || "Application crashed fix the bug to fix";
     next(error);
   }
 }

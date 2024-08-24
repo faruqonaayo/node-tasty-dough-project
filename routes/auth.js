@@ -53,18 +53,27 @@ passport.use(
         return cb("User not found");
       }
       bcrypt.compare(password, user.password, (err, result) => {
-        if (err) {
-          cb(err);
-        } else {
-          if (result) {
-            return cb(null, user);
+        try {
+          if (err) {
+            cb(err);
           } else {
-            return cb(null, false);
+            if (result) {
+              return cb(null, user);
+            } else {
+              return cb(null, false);
+            }
           }
+        } catch (error) {
+          error.statusCode = error.statusCode || 500;
+          error.message =
+            error.message || "Application crashed fix the bug to fix";
+          next(error);
         }
       });
     } catch (error) {
-      console.log(error);
+      error.statusCode = error.statusCode || 500;
+      error.message = error.message || "Application crashed fix the bug to fix";
+      next(error);
     }
   })
 );
