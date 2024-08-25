@@ -1,12 +1,15 @@
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
+import fs from "fs";
 
 import express from "express";
 import bodyParser from "body-parser";
 import session from "express-session";
 import connectPgSimple from "connect-pg-simple";
 import passport from "passport";
-import { Strategy } from "passport-local";
+import helmet from "helmet";
+import compression from "compression";
+import morgan from "morgan";
 
 import dotenvConfig from "./util/dotenvConfig.js";
 import { db, sessionPool } from "./util/dbConnect.js";
@@ -27,6 +30,17 @@ db.connect(() => {
 app.set("view engine", "ejs");
 app.set("views", "views");
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.join(dirname(__filename));
+const accesLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  { flags: "a" }
+);
+
+app.use(helmet());
+app.use(compression());
+app.use(morgan("combined", { stream: accesLogStream }));
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const pgSession = connectPgSimple(session);
@@ -45,9 +59,6 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.join(dirname(__filename));
 
 app.use(express.static(path.resolve(__dirname, "public")));
 app.use("/uploads", express.static(path.resolve(__dirname, "uploads")));
