@@ -1,0 +1,34 @@
+.search-orders {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+}
+
+.search-orders input {
+  border: none;
+  font-size: 0.9rem;
+  padding: 5px 7px;
+  border: 2px solid #596e79;
+  border-radius: 7px;
+  margin-bottom: 10px;
+  margin-right: 3px;
+}
+
+.orders-result {
+  padding: 40px 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.order-card {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 7px;
+}

@@ -17,8 +17,8 @@ class Order {
         "INSERT INTO orders (customer_name,pickup_date, pickup_time, mobile) VALUES($1,$2,$3,$4) RETURNING id",
         [this.name, this.date, this.time, this.mobile]
       );
-        const createdOrder = createdOrderResponse.rows[0];
-        
+      const createdOrder = createdOrderResponse.rows[0];
+
       let orderProducts = [];
       cartProds.forEach(async (prod) => {
         await db.query(
@@ -48,6 +48,33 @@ class Order {
       return getOrderProducts.rows;
     } catch (error) {
       // get back to handling errror
+      console.log(error);
+    }
+  }
+  static async getOrdersByDate(date) {
+    try {
+      const response = await db.query(
+        "SELECT * FROM orders WHERE pickup_date = $1",
+        [date]
+      );
+      return response.rows;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async getOrderProductsById(id) {
+    try {
+      const response = await db.query(
+        `SELECT order_products.doz_quantity, products.name 
+        FROM order_products
+        INNER JOIN products
+        ON order_products.product_id = products.id
+        WHERE order_id = $1`,
+        [id]
+      );
+      return response.rows;
+    } catch (error) {
       console.log(error);
     }
   }

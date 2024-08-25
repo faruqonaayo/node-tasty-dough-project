@@ -33,7 +33,7 @@ router.get("/login", authControllers.getLogIn);
 router.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/admin/add-product",
+    successRedirect: "/admin/orders",
     failureRedirect: "/auth/login",
   })
 );

@@ -1,6 +1,29 @@
 <%- include("../partials/head.ejs") %>
-
+<link rel="stylesheet" href="/styles/orders.css">
     <%- include("../partials/header.ejs") %>
-
-        <h1>Orders</h1>
+        <div class="search-orders">
+            <form action="/admin/orders/search" method="post">
+                <input type="date" name="keyword">
+                <button type="submit" class="btn">Search</button>
+            </form>
+        </div>
+        <div class="orders-result">
+            <% ordersResult.forEach(order=> {%>
+                <div class="order-card">
+                    <h2>
+                        <%= order.customer_name %>
+                    </h2>
+                    <label>
+                        <%= new Date(order.pickup_date).toISOString().split("T")[0] %>
+                    </label>
+                    <label>
+                        <%= order.pickup_time %>
+                    </label>
+                    <label>
+                        <%= order.mobile %>
+                    </label>
+                    <a href="/admin/orders/<%= order.id %>" class="btn">Order Details</a>
+                </div>
+                <% }); %>
+        </div>
         <%- include("../partials/footer.ejs") %>

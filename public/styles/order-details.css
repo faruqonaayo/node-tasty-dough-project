@@ -1,0 +1,23 @@
+.orders-details {
+  padding: 40px 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.order-product-card {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 7px;
+  margin: 5px;
+}
+
+.order-product-card h2 {
+  font-size: 1.1rem;
+  margin: 3px;
+}

@@ -1,6 +1,8 @@
 <%- include("../partials/head.ejs") %>
-
+    <link rel="stylesheet" href="/styles/error.css">
     <%- include("../partials/header.ejs") %>
-
-        <h1>Not Found</h1>
+        <div class="error-details">
+            <h1>Not Found</h1>
+            <a href="/bakery" class="btn">Go to bakery</a>
+        </div>
         <%- include("../partials/footer.ejs") %>

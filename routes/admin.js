@@ -66,5 +66,11 @@ router.post(
 router.post("/delete", adminControllers.postDeleteProduct);
 
 router.get("/orders", adminControllers.getOrders);
+router.get("/orders/:id", adminControllers.getOrderDetails);
+router.post(
+  "/orders/search",
+  [body("keyword").isDate()],
+  adminControllers.postSearchOrder
+);
 
 export default router;

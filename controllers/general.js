@@ -27,7 +27,7 @@ export async function postSearchResult(req, res, next) {
       searchKeyword.toLowerCase()
     );
     // console.log(allProducts);
-    res.status(200).render("general-views/search", {
+    res.status(200).render("general-views/bakery", {
       allProducts,
       preValue: searchKeyword,
       auth: req.isAuthenticated(),

@@ -1,0 +1,13 @@
+<%- include("../partials/head.ejs") %>
+    <link rel="stylesheet" href="/styles/order-details.css">
+    <%- include("../partials/header.ejs") %>
+        <div class="orders-details">
+            <% orderDetails.forEach(product=> {%>
+                <div class="order-product-card">
+                    <h2>
+                        <%= product.name %>: <%= product.doz_quantity %> dozens
+                    </h2>
+                </div>
+                <% }); %>
+        </div>
+        <%- include("../partials/footer.ejs") %>
